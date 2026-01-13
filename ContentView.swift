@@ -9,39 +9,42 @@ import SwiftUI
 struct ContentView: View {
     
     var body: some View {
-        ZStack {
-            
-            Color.black
-                .ignoresSafeArea()
-            
-            VStack(spacing: 30) {
+        NavigationStack {
+            ZStack {
+                Color.blue
+                    .ignoresSafeArea()
                 
-                Text("GAME MENU")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                
-                
-                Text("Difficulty Selection")
-                    .font(.headline)
-                    .foregroundColor(.gray)
-                
-                
-                VStack(spacing: 20) {
+                VStack(spacing: 40) {
                     
-                    DifficultyButton(title: "Easy", color: .green) {
-                        print("Easy selected")
-                    }
                     
-                    DifficultyButton(title: "Medium", color: .orange) {
-                        print("Medium selected")
-                    }
+                    Text("Game Prenzy")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
                     
-                    DifficultyButton(title: "Hard", color: .red) {
-                        print("Hard selected")
+                    
+                    Text("Difficulty Selection")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding(.top, 20)
+                    
+                    
+                    VStack(spacing: 20) {
+                        
+                        NavigationLink(destination: GameView()) {
+                            DifficultyButton(title: "Easy", color: .green)
+                        }
+                        
+                        NavigationLink(destination: GameView()) {
+                            DifficultyButton(title: "Medium", color: .orange)
+                        }
+                        
+                        NavigationLink(destination: GameView()) {
+                            DifficultyButton(title: "Hard", color: .red)
+                        }
                     }
+                    .padding(.top, 0)
                 }
-                .padding(.top, 20)
             }
         }
     }
@@ -49,25 +52,46 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-    
 }
+
+
 struct DifficultyButton: View {
     
     let title: String
     let color: Color
-    let action: () -> Void
     
     var body: some View {
-        Button(action: action) {
-            Text(title)
-                .font(.title2)
-                .fontWeight(.semibold)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(color)
-                .cornerRadius(15)
+        Text(title)
+            .font(.title2)
+            .fontWeight(.semibold)
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(color)
+            .cornerRadius(15)
+            .padding(.horizontal, 40)
+    }
+}
+
+
+struct GameView: View {
+    
+    var body: some View {
+        ZStack {
+            Color.black
+                .ignoresSafeArea()
+            
+            VStack(spacing: 20) {
+                Text("GAME SCREEN")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                
+                Text("Game will start here")
+                    .foregroundColor(.gray)
+            }
         }
-        .padding(.horizontal, 40)
+        .navigationTitle("Game")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
