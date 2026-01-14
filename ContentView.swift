@@ -31,17 +31,18 @@ struct ContentView: View {
                     
                     VStack(spacing: 20) {
                         
-                        NavigationLink(destination: GameView()) {
+                        NavigationLink(destination: GameView(gridSize: 3)) {
                             DifficultyButton(title: "Easy", color: .green)
                         }
-                        
-                        NavigationLink(destination: GameView()) {
+
+                        NavigationLink(destination: GameView(gridSize: 5)) {
                             DifficultyButton(title: "Medium", color: .orange)
                         }
-                        
-                        NavigationLink(destination: GameView()) {
+
+                        NavigationLink(destination: GameView(gridSize: 7)) {
                             DifficultyButton(title: "Hard", color: .red)
                         }
+
                     }
                     .padding(.top, 0)
                 }
@@ -73,8 +74,9 @@ struct DifficultyButton: View {
     }
 }
 
-
 struct GameView: View {
+    
+    let gridSize: Int 
     
     var body: some View {
         ZStack {
@@ -82,16 +84,41 @@ struct GameView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 20) {
+                
                 Text("GAME SCREEN")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
+                    .padding(.bottom, 90)
                 
-                Text("Game will start here")
-                    .foregroundColor(.gray)
+                // Dynamic Grid
+                GridView(gridSize: gridSize)
+                    .padding(.bottom, 90)
             }
+            .padding()
         }
         .navigationTitle("Game")
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+struct GridView: View {
+    
+    let gridSize: Int
+    
+    // Creates grid columns dynamically
+    var columns: [GridItem] {
+        Array(repeating: GridItem(.flexible(), spacing: 8), count: gridSize)
+    }
+    
+    var body: some View {
+        LazyVGrid(columns: columns, spacing: 8) {
+            ForEach(0..<(gridSize * gridSize), id: \.self) { _ in
+                Rectangle()
+                    .fill(Color.blue)
+                    .aspectRatio(1, contentMode: .fit)
+                    .cornerRadius(6)
+            }
+        }
     }
 }
