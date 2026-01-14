@@ -78,14 +78,14 @@ struct GameView: View {
     
     var body: some View {
         ZStack {
-            Color.black
+            Color.white
                 .ignoresSafeArea()
             
             VStack(spacing: 20) {
                 Text("GAME SCREEN")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .foregroundColor(.white)
+                    .foregroundColor(.black)
                 
                 Text("Game will start here")
                     .foregroundColor(.gray)
